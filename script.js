@@ -6,10 +6,9 @@ let hargaAsli = 0;
 let kodeUnik = 0;
 let paketDipilih = "";
 let nomorHP = "";
-let nicknameMLBB = "";
 
 /* ===============================
-   TAB HANDLER
+   TAB & INPUT HANDLER
 ================================ */
 function showTab(tab) {
   ["data","pulsa","masaaktif","mlbb"].forEach(t => {
@@ -21,12 +20,13 @@ function showTab(tab) {
     document.getElementById(id).classList.remove("active");
   });
 
-  if(tab==="data") tabData.classList.add("active");
-  if(tab==="pulsa") tabPulsa.classList.add("active");
-  if(tab==="masaaktif") tabMasaAktif.classList.add("active");
-  if(tab==="mlbb") tabMLBB.classList.add("active");
+  if(tab === "data") tabData.classList.add("active");
+  if(tab === "pulsa") tabPulsa.classList.add("active");
+  if(tab === "masaaktif") tabMasaAktif.classList.add("active");
+  if(tab === "mlbb") tabMLBB.classList.add("active");
 
-  if(tab==="mlbb") {
+  /* GANTI INPUT */
+  if(tab === "mlbb") {
     inputHP.style.display = "none";
     inputMLBB.style.display = "block";
   } else {
@@ -36,10 +36,28 @@ function showTab(tab) {
 }
 
 /* ===============================
+   OPERATOR PAKET DATA
+================================ */
+function showOperator(op) {
+  ["xl","axis","indosat","telkomsel"].forEach(o => {
+    document.getElementById(o).style.display = "none";
+  });
+  document.getElementById(op).style.display = "block";
+
+  document.querySelectorAll(".operator-tabs button")
+    .forEach(btn => btn.classList.remove("op-active"));
+
+  event.target.classList.add("op-active");
+}
+
+/* ===============================
    PILIH PRODUK
 ================================ */
 function selectPaket(harga, nama) {
-  document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+  document.querySelectorAll(".card").forEach(card => {
+    card.classList.remove("active");
+  });
+
   event.currentTarget.classList.add("active");
 
   kodeUnik = Math.floor(Math.random() * 100) + 1;
@@ -52,80 +70,45 @@ function selectPaket(harga, nama) {
 }
 
 /* ===============================
-   CEK NICKNAME MLBB
-================================ */
-async function cekNicknameMLBB() {
-  const id = document.getElementById("mlbbId").value;
-  const server = document.getElementById("mlbbServer").value;
-  const box = document.getElementById("mlbbResult");
-
-  if (!id || !server) {
-    box.style.display = "none";
-    return;
-  }
-
-  box.style.display = "block";
-  box.style.color = "#aaa";
-  box.innerText = "⏳ Mengecek nickname...";
-
-  try {
-    const res = await fetch(
-      `https://api.duniagames.co.id/api/transaction/v1/top-up/inquiry/store/mobile-legends?productId=1&itemId=2&catalogId=57&paymentId=7&gameId=${id}&zoneId=${server}`
-    );
-    const data = await res.json();
-
-    if (data?.data?.gameDetail?.userName) {
-      nicknameMLBB = data.data.gameDetail.userName;
-      box.style.color = "#4caf50";
-      box.innerText = "✅ Nickname: " + nicknameMLBB;
-    } else {
-      nicknameMLBB = "";
-      box.style.color = "#ff5252";
-      box.innerText = "❌ ID / Server tidak valid";
-    }
-  } catch {
-    nicknameMLBB = "";
-    box.style.color = "#ffb300";
-    box.innerText = "⚠️ Gagal cek otomatis, admin akan cek manual";
-  }
-}
-
-/* ===============================
    BUKA QRIS
 ================================ */
 function openQR() {
-  if(total===0) {
-    alert("Pilih produk terlebih dahulu");
+  if(total === 0) {
+    alert("Silakan pilih produk terlebih dahulu");
     return;
   }
 
-  let identitas = "";
+  let detailPembeli = "";
 
-  if(document.getElementById("mlbb").style.display==="block") {
-    const id = mlbbId.value;
-    const server = mlbbServer.value;
+  if(document.getElementById("mlbb").style.display === "block") {
+    const id = document.getElementById("mlbbId").value;
+    const server = document.getElementById("mlbbServer").value;
+
     if(!id || !server) {
-      alert("Masukkan ID & Server MLBB");
+      alert("Masukkan ID dan Server MLBB");
       return;
     }
-    identitas = `ID MLBB: ${id} (${server})${nicknameMLBB ? " - "+nicknameMLBB : ""}`;
+
+    detailPembeli = `ID MLBB: ${id} (${server})`;
   } else {
-    nomorHP = nohp.value;
+    nomorHP = document.getElementById("nohp").value;
+
     if(!nomorHP) {
       alert("Masukkan nomor HP");
       return;
     }
-    identitas = `Nomor: ${nomorHP}`;
+
+    detailPembeli = `Nomor: ${nomorHP}`;
   }
 
-  totalBayar.innerHTML =
-    `<b>Total Bayar</b><br>
+  document.getElementById("totalBayar").innerHTML =
+    `<b>Total Bayar:</b><br>
      <span style="font-size:20px;font-weight:700;">
        Rp ${total.toLocaleString("id-ID")}
      </span><br>
      <small style="color:#aaa;">
-       ${identitas}<br>
-       Harga: Rp ${hargaAsli.toLocaleString("id-ID")}<br>
+       ${detailPembeli}<br>
+       Harga produk: Rp ${hargaAsli.toLocaleString("id-ID")}<br>
        Kode unik: Rp ${kodeUnik}
      </small>`;
 
@@ -133,17 +116,62 @@ function openQR() {
 }
 
 /* ===============================
-   WHATSAPP
+   COPY NOMINAL
+================================ */
+function copyNominal() {
+  navigator.clipboard.writeText(total.toString())
+    .then(() => {
+      const btn = document.getElementById("copyNominalBtn");
+      btn.innerText = "✅ Nominal Disalin";
+      setTimeout(() => {
+        btn.innerText = "📋 Salin Nominal Pembayaran";
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Gagal menyalin nominal");
+    });
+}
+
+/* ===============================
+   DOWNLOAD QRIS
+================================ */
+function downloadQRIS() {
+  const img = document.getElementById("qrisImage");
+  const link = document.createElement("a");
+
+  link.href = img.src;
+  link.download = "QRIS-XC-Store.png";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+/* ===============================
+   WHATSAPP ADMIN
 ================================ */
 function chatWhatsApp() {
-  const adminWA = "6281234567890"; // GANTI
-  const text =
-`Halo Admin XC-Store
-${paketDipilih}
-${nicknameMLBB ? "Nickname: "+nicknameMLBB+"\n" : ""}
-Total: Rp ${total.toLocaleString("id-ID")}`;
+  const adminWA = "6281234567890"; // GANTI NOMOR ADMIN
 
-  window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(text)}`);
+  let identitas = "";
+
+  if(document.getElementById("mlbb").style.display === "block") {
+    const id = document.getElementById("mlbbId").value;
+    const server = document.getElementById("mlbbServer").value;
+    identitas = `ID MLBB: ${id} (${server})`;
+  } else {
+    identitas = `Nomor: ${nomorHP}`;
+  }
+
+  const text =
+    `Halo Admin XC-Store%0A` +
+    `${identitas}%0A` +
+    `Produk: ${paketDipilih}%0A` +
+    `Harga Produk: Rp ${hargaAsli.toLocaleString("id-ID")}%0A` +
+    `Kode Unik: Rp ${kodeUnik}%0A` +
+    `Total Transfer: Rp ${total.toLocaleString("id-ID")}`;
+
+  window.open(`https://wa.me/${adminWA}?text=${text}`);
 }
 
 /* ===============================
