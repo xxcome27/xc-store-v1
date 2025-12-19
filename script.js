@@ -151,7 +151,7 @@ function downloadQRIS() {
    WHATSAPP ADMIN
 ================================ */
 function chatWhatsApp() {
-  const adminWA = "6281234567890"; // GANTI NOMOR ADMIN
+  const adminWA = "6285129893887"; // GANTI NOMOR ADMIN
 
   let identitas = "";
 
