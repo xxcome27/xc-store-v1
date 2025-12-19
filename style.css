@@ -1,278 +1,182 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+/* ===============================
+   VARIABEL GLOBAL
+================================ */
+let total = 0;
+let hargaAsli = 0;
+let kodeUnik = 0;
+let paketDipilih = "";
+let nomorHP = "";
+
+/* ===============================
+   TAB & INPUT HANDLER
+================================ */
+function showTab(tab) {
+  ["data","pulsa","masaaktif","mlbb"].forEach(t => {
+    document.getElementById(t).style.display = "none";
+  });
+  document.getElementById(tab).style.display = "block";
+
+  ["tabData","tabPulsa","tabMasaAktif","tabMLBB"].forEach(id => {
+    document.getElementById(id).classList.remove("active");
+  });
+
+  if(tab === "data") tabData.classList.add("active");
+  if(tab === "pulsa") tabPulsa.classList.add("active");
+  if(tab === "masaaktif") tabMasaAktif.classList.add("active");
+  if(tab === "mlbb") tabMLBB.classList.add("active");
+
+  /* GANTI INPUT */
+  if(tab === "mlbb") {
+    inputHP.style.display = "none";
+    inputMLBB.style.display = "block";
+  } else {
+    inputHP.style.display = "block";
+    inputMLBB.style.display = "none";
+  }
 }
 
-body {
-  background: #0e0e0e;
-  color: #ffffff;
+/* ===============================
+   OPERATOR PAKET DATA
+================================ */
+function showOperator(op) {
+  ["xl","axis","indosat","telkomsel"].forEach(o => {
+    document.getElementById(o).style.display = "none";
+  });
+  document.getElementById(op).style.display = "block";
+
+  document.querySelectorAll(".operator-tabs button")
+    .forEach(btn => btn.classList.remove("op-active"));
+
+  event.target.classList.add("op-active");
 }
 
-/* HEADER */
-.header {
-  background: #000;
-  text-align: center;
-  padding: 16px;
-  border-bottom: 1px solid #222;
+/* ===============================
+   PILIH PRODUK
+================================ */
+function selectPaket(harga, nama) {
+  document.querySelectorAll(".card").forEach(card => {
+    card.classList.remove("active");
+  });
+
+  event.currentTarget.classList.add("active");
+
+  kodeUnik = Math.floor(Math.random() * 100) + 1;
+  hargaAsli = harga;
+  total = harga + kodeUnik;
+  paketDipilih = nama;
+
+  document.getElementById("total").innerText =
+    "Rp " + total.toLocaleString("id-ID");
 }
 
-.header h1 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 1px;
+/* ===============================
+   BUKA QRIS
+================================ */
+function openQR() {
+  if(total === 0) {
+    alert("Silakan pilih produk terlebih dahulu");
+    return;
+  }
+
+  let detailPembeli = "";
+
+  if(document.getElementById("mlbb").style.display === "block") {
+    const id = document.getElementById("mlbbId").value;
+    const server = document.getElementById("mlbbServer").value;
+
+    if(!id || !server) {
+      alert("Masukkan ID dan Server MLBB");
+      return;
+    }
+
+    detailPembeli = `ID MLBB: ${id} (${server})`;
+  } else {
+    nomorHP = document.getElementById("nohp").value;
+
+    if(!nomorHP) {
+      alert("Masukkan nomor HP");
+      return;
+    }
+
+    detailPembeli = `Nomor: ${nomorHP}`;
+  }
+
+  document.getElementById("totalBayar").innerHTML =
+    `<b>Total Bayar:</b><br>
+     <span style="font-size:20px;font-weight:700;">
+       Rp ${total.toLocaleString("id-ID")}
+     </span><br>
+     <small style="color:#aaa;">
+       ${detailPembeli}<br>
+       Harga produk: Rp ${hargaAsli.toLocaleString("id-ID")}<br>
+       Kode unik: Rp ${kodeUnik}
+     </small>`;
+
+  qrisModal.style.display = "block";
 }
 
-/* MARQUEE */
-.marquee {
-  background: #111;
-  color: #ccc;
-  font-size: 12px;
-  margin-top: 8px;
-  padding: 6px 0;
-  overflow: hidden;
+/* ===============================
+   COPY NOMINAL
+================================ */
+function copyNominal() {
+  navigator.clipboard.writeText(total.toString())
+    .then(() => {
+      const btn = document.getElementById("copyNominalBtn");
+      btn.innerText = "✅ Nominal Disalin";
+      setTimeout(() => {
+        btn.innerText = "📋 Salin Nominal Pembayaran";
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Gagal menyalin nominal");
+    });
 }
 
-.marquee-text {
-  display: inline-block;
-  white-space: nowrap;
-  padding-left: 100%;
-  animation: marquee 18s linear infinite;
+/* ===============================
+   DOWNLOAD QRIS
+================================ */
+function downloadQRIS() {
+  const img = document.getElementById("qrisImage");
+  const link = document.createElement("a");
+
+  link.href = img.src;
+  link.download = "QRIS-XC-Store.png";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+/* ===============================
+   WHATSAPP ADMIN
+================================ */
+function chatWhatsApp() {
+  const adminWA = "6281234567890"; // GANTI NOMOR ADMIN
+
+  let identitas = "";
+
+  if(document.getElementById("mlbb").style.display === "block") {
+    const id = document.getElementById("mlbbId").value;
+    const server = document.getElementById("mlbbServer").value;
+    identitas = `ID MLBB: ${id} (${server})`;
+  } else {
+    identitas = `Nomor: ${nomorHP}`;
+  }
+
+  const text =
+    `Halo Admin XC-Store%0A` +
+    `${identitas}%0A` +
+    `Produk: ${paketDipilih}%0A` +
+    `Harga Produk: Rp ${hargaAsli.toLocaleString("id-ID")}%0A` +
+    `Kode Unik: Rp ${kodeUnik}%0A` +
+    `Total Transfer: Rp ${total.toLocaleString("id-ID")}`;
+
+  window.open(`https://wa.me/${adminWA}?text=${text}`);
 }
 
-/* CONTAINER */
-.container {
-  padding: 16px;
-}
-
-/* INPUT */
-.input-box input {
-  width: 100%;
-  padding: 14px;
-  background: #111;
-  border: 1px solid #333;
-  color: #fff;
-  border-radius: 10px;
-  outline: none;
-  font-size: 14px;
-}
-
-/* TABS */
-.tabs {
-  display: flex;
-  margin-top: 16px;
-  gap: 6px;
-}
-
-.tabs button {
-  flex: 1;
-  padding: 10px;
-  background: #111;
-  border: 1px solid #333;
-  color: #aaa;
-  border-radius: 10px;
-  font-size: 13px;
-}
-
-.tabs .active {
-  background: #fff;
-  color: #000;
-  font-weight: 600;
-}
-
-/* OPERATOR TABS */
-.operator-tabs {
-  display: flex;
-  gap: 6px;
-  margin: 16px 0;
-}
-
-.operator-tabs button {
-  flex: 1;
-  padding: 8px;
-  background: #111;
-  border: 1px solid #333;
-  color: #aaa;
-  border-radius: 8px;
-  font-size: 12px;
-}
-
-.operator-tabs .op-active {
-  background: #fff;
-  color: #000;
-  font-weight: 600;
-}
-
-/* CARD */
-.card {
-  background: #111;
-  border: 1px solid #2a2a2a;
-  border-radius: 14px;
-  padding: 14px;
-  margin-bottom: 12px;
-  position: relative;
-}
-
-.card h4 {
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.price {
-  font-size: 13px;
-  color: #ccc;
-}
-
-/* PROMO TAG */
-.promo {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #fff;
-  color: #000;
-  font-size: 10px;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
-/* FOOTER */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #000;
-  border-top: 1px solid #222;
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer small {
-  color: #aaa;
-}
-
-.footer #total {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.footer button {
-  background: #fff;
-  color: #000;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-}
-
-.modal-content {
-  background: #111;
-  margin: 80px auto;
-  padding: 20px;
-  width: 90%;
-  max-width: 340px;
-  border-radius: 16px;
-  text-align: center;
-  border: 1px solid #333;
-}
-
-.modal-content h3 {
-  margin-bottom: 8px;
-}
-
-.modal-content p {
-  color: #ccc;
-  margin-bottom: 10px;
-}
-
-.wa-btn {
-  width: 100%;
-  background: #25D366;
-  color: #000;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-.close-btn {
-  width: 100%;
-  background: #222;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  margin-top: 8px;
-}/* === CARD AKTIF (PRODUK TERPILIH) === */
-.card.active {
-  border: 2px solid #ffffff;
-  background: linear-gradient(135deg, #1a1a1a, #000);
-}
-
-.card.active h4,
-.card.active .price,
-.card.active .desc {
-  color: #ffffff;
-}
-
-.card.active::after {
-  content: "✓ Dipilih";
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #ffffff;
-  color: #000;
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-/* FIX deskripsi produk (tanpa ubah HTML) */
-.card {
-  position: relative;
-}
-
-.card h4 + * {
-  display: inline-block;
-  font-size: 11px;
-  color: #b0b0b0;
-  background: #1f1f1f;
-  padding: 4px 8px;
-  border-radius: 6px;
-  margin: 4px 0 8px;
-}
-/* Sekat atas produk agar sama seperti Paket Data */
-
-/* Pulsa */
-#pulsa .card:first-child {
-  margin-top: 16px;
-}
-
-/* Masa Aktif */
-#masaaktif .card:first-child {
-  margin-top: 16px;
-}
-
-/* Diamond MLBB */
-#mlbb .card:first-child {
-  margin-top: 16px;
-}
-}
+/* ===============================
+   TUTUP MODAL
+================================ */
+function closeQR() {
+  qrisModal.style.display = "none";
+    }
