@@ -188,3 +188,16 @@ function chatWhatsApp() {
 function closeQR() {
   qrisModal.style.display = "none";
 }
+function chatAdmin() {
+  const adminWA = "6285129893887"; // GANTI NOMOR ADMIN
+
+  const text =
+    `Halo Admin XC-Store 👋\n\n` +
+    `Saya ingin bertanya terlebih dahulu sebelum melakukan pemesanan.\n\n` +
+    `Terima kasih 🙏`;
+
+  window.open(
+    `https://wa.me/${adminWA}?text=${encodeURIComponent(text)}`,
+    "_blank"
+  );
+}
