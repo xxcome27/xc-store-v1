@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>XC-Store | PPOB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <h1>XC-Store</h1>
+
+  <div class="marquee">
+    <div class="marquee-text">
+      🎉 Promo Terbaru XC-Store • Pembayaran QRIS GoPay • Proses Cepat & Aman •
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="input-box" id="inputHP">
+  <input type="tel" id="nohp" placeholder="Masukkan Nomor HP">
+</div>
+
+<div class="input-box" id="inputMLBB" style="display:none;">
+  <input type="text" id="mlbbId" placeholder="Masukkan ID MLBB">
+  <input
+    type="text"
+    id="mlbbServer"
+    placeholder="Masukkan Server (contoh: 1234)"
+    style="margin-top:8px;"
+  >
+</div>
+  </div>
+
+  <!-- TAB -->
+  <div class="tabs">
+  <button id="tabData" class="active" onclick="showTab('data')">Paket Data</button>
+  <button id="tabPulsa" onclick="showTab('pulsa')">Pulsa</button>
+  <button id="tabMasaAktif" onclick="showTab('masaaktif')">Masa Aktif</button>
+  <button id="tabMLBB" onclick="showTab('mlbb')">Diamond MLBB</button>
+</div>
+
+  <!-- ================= PAKET DATA ================= -->
+  <div id="data" class="tab-content">
+
+    <div class="operator-tabs">
+      <button class="op-active" onclick="showOperator('xl')">XL</button>
+      <button onclick="showOperator('axis')">AXIS</button>
+      <button onclick="showOperator('indosat')">INDOSAT</button>
+      <button onclick="showOperator('telkomsel')">TELKOMSEL</button>
+    </div>
+
+    <!-- XL -->
+    <div id="xl" class="operator-content">
+      <div class="card" onclick="selectPaket(6500,'XL Paket Game 1GB')">
+        <span class="promo">Promo</span>
+        <h4>XL Paket Game 1GB</h4>
+        <p class="desc">Cocok untuk campuran WIFI agar tidak lag saat bermain game, berlaku untuk game ML, FF, PUBG & AOV, masa aktif 30 hari</p>
+        <p class="price">Rp 6.500</p>
+      </div>
+      <div id="xl" class="operator-content">
+      <div class="card" onclick="selectPaket(10000,'XL Paket Game 2GB')">
+        <span class="promo">Promo</span>
+        <h4>XL Paket Game 2GB</h4>
+        <p class="desc">Cocok untuk campuran WIFI agar tidak lag saat bermain game, berlaku untuk game ML, FF, PUBG & AOV, masa aktif 30 hari</p>
+        <p class="price">Rp 10.000</p>
+    </div>
+
+    <!-- AXIS -->
+    <div id="axis" class="operator-content" style="display:none;">
+      <div class="card" onclick="selectPaket(52000,'AXIS Bronet 8GB')">
+        <h4>AXIS Bronet 8GB</h4>
+        <p class="desc">Kuota nasional, aktif 30 hari</p>
+        <p class="price">Rp 52.000</p>
+      </div>
+    </div>
+
+    <!-- INDOSAT -->
+    <div id="indosat" class="operator-content" style="display:none;">
+      <div class="card" onclick="selectPaket(60000,'Indosat Freedom 10GB')">
+        <h4>Indosat Freedom 10GB</h4>
+        <p class="desc">Kuota utama tanpa pembagian waktu</p>
+        <p class="price">Rp 60.000</p>
+      </div>
+    </div>
+
+    <!-- TELKOMSEL -->
+    <div id="telkomsel" class="operator-content" style="display:none;">
+      <div class="card" onclick="selectPaket(75000,'Telkomsel Internet 10GB')">
+        <h4>Telkomsel Internet 10GB</h4>
+        <p class="desc">Kuota nasional, jaringan stabil</p>
+        <p class="price">Rp 75.000</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= PULSA ================= -->
+  <div id="pulsa" class="tab-content" style="display:none;">
+    <div class="card" onclick="selectPaket(10000,'Pulsa 10.000')">
+      <h4>Pulsa 10.000</h4>
+      <p class="desc">Pulsa reguler semua operator</p>
+      <p class="price">Rp 10.000</p>
+    </div>
+  </div>
+
+  <!-- ================= MASA AKTIF ================= -->
+  <div id="masaaktif" class="tab-content" style="display:none;">
+    <div class="card" onclick="selectPaket(5000,'Masa Aktif XL 30 Hari')">
+      <h4>Masa Aktif XL 30 Hari</h4>
+      <p class="desc">Memperpanjang masa aktif kartu XL</p>
+      <p class="price">Rp 5.000</p>
+    </div>
+
+    <div class="card" onclick="selectPaket(7000,'Masa Aktif AXIS 30 Hari')">
+      <h4>Masa Aktif AXIS 30 Hari</h4>
+      <p class="desc">Memperpanjang masa aktif kartu AXIS</p>
+      <p class="price">Rp 7.000</p>
+    </div>
+  </div>
+<!-- ================= DIAMOND MLBB ================= -->
+<div id="mlbb" class="tab-content" style="display:none;">
+
+  <div class="card" onclick="selectPaket(25000,'MLBB Weekly Diamond Pass Promo (Stok Terbatas)')">
+    <span class="promo">Promo</span>
+    <h4>Weekly Diamond Pass (Promo)</h4>
+    <p class="desc">
+      Diamond MLBB mingguan<br>
+      ⚠️ Stok terbatas, <b>WAJIB tanya stok terlebih dahulu</b>
+    </p>
+    <p class="price">Rp 25.000</p>
+  </div>
+
+  <div class="card" onclick="selectPaket(30000,'MLBB Weekly Diamond Pass Reguler')">
+    <h4>Weekly Diamond Pass Reguler</h4>
+    <p class="desc">
+      Diamond MLBB mingguan<br>
+      ✅ Stok selalu tersedia
+    </p>
+    <p class="price">Rp 30.000</p>
+  </div>
+
+  <div class="card" onclick="selectPaket(2000,'MLBB 3 Diamond')">
+    <h4>3 Diamond MLBB</h4>
+    <p class="desc">Top up diamond MLBB cepat & aman</p>
+    <p class="price">Rp 2.000</p>
+  </div>
+
+  <div class="card" onclick="selectPaket(3000,'MLBB 5 Diamond')">
+    <h4>5 Diamond MLBB</h4>
+    <p class="desc">Top up diamond MLBB cepat & aman</p>
+    <p class="price">Rp 3.000</p>
+  </div>
+
+</div>
+</div>
+
+<footer class="footer">
+  <div>
+    <small>Total Pembayaran</small>
+    <div id="total">Rp 0</div>
+  </div>
+  <button onclick="openQR()">Lanjut</button>
+</footer>
+
+<!-- MODAL QRIS -->
+<div class="modal" id="qrisModal">
+  <div class="modal-content">
+    <h3>Scan QRIS GoPay</h3>
+
+    <p id="totalBayar"></p>
+
+    <!-- TOMBOL COPY NOMINAL -->
+    <button
+      id="copyNominalBtn"
+      style="width:100%;background:#fff;color:#000;border:none;
+      padding:10px;border-radius:10px;font-weight:600;margin-bottom:8px;"
+      onclick="copyNominal()"
+    >
+      📋 Salin Nominal Pembayaran
+    </button>
+
+    <!-- TOMBOL DOWNLOAD QR -->
+    <button
+      style="width:100%;background:#111;color:#fff;border:1px solid #333;
+      padding:10px;border-radius:10px;font-weight:600;margin-bottom:8px;"
+      onclick="downloadQRIS()"
+    >
+      ⬇️ Download QRIS
+    </button>
+
+    <small style="color:#aaa;display:block;margin-bottom:8px;">
+      *Nominal sudah termasuk <b>kode unik</b> agar pembayaran mudah diverifikasi.
+    </small>
+
+    <!-- GAMBAR QR -->
+    <img id="qrisImage" src="qris-gopay.png" width="200">
+
+    <button class="wa-btn" onclick="chatWhatsApp()">Kirim Bukti via WhatsApp</button>
+    <button class="close-btn" onclick="closeQR()">Tutup</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
