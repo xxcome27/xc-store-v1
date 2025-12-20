@@ -170,12 +170,13 @@ function chatWhatsApp() {
   `📦 DETAIL PESANAN\n` +
   `━━━━━━━━━━━━━━━━━━\n` +
   `Produk        : ${paketDipilih}\n` +
-  `${identitas}\n` +
   `Harga Produk  : Rp ${hargaAsli.toLocaleString("id-ID")}\n` +
   `Kode Unik     : Rp ${kodeUnik}\n` +
   `──────────────────\n` +
   `Total Bayar   : Rp ${total.toLocaleString("id-ID")}\n` +
   `━━━━━━━━━━━━━━━━━━\n\n` +
+  `📋 DATA TUJUAN (SALIN SAJA)\n` +
+  `${identitas}\n\n` +
   `Bukti pembayaran akan saya kirimkan.\n` +
   `Terima kasih 🙏`;
    
