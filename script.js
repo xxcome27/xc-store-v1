@@ -164,21 +164,21 @@ function chatWhatsApp() {
   }
 
   const text =
-    `Halo Admin XC-Store 👋%0A%0A` +
-    `Saya ingin melakukan pemesanan dengan detail berikut:%0A%0A` +
-    `━━━━━━━━━━━━━━━━━━%0A` +
-    `📦 DETAIL PESANAN%0A` +
-    `━━━━━━━━━━━━━━━━━━%0A` +
-    `Produk        : ${paketDipilih}%0A` +
-    `${identitas}%0A` +
-    `Harga Produk  : Rp ${hargaAsli.toLocaleString("id-ID")}%0A` +
-    `Kode Unik     : Rp ${kodeUnik}%0A` +
-    `──────────────────%0A` +
-    `Total Bayar   : Rp ${total.toLocaleString("id-ID")}%0A` +
-    `━━━━━━━━━━━━━━━━━━%0A%0A` +
-    `Bukti pembayaran akan saya kirimkan.%0A` +
-    `Terima kasih 🙏`;
-
+  `Halo Admin XC-Store 👋\n\n` +
+  `Saya ingin melakukan pemesanan dengan detail berikut:\n\n` +
+  `━━━━━━━━━━━━━━━━━━\n` +
+  `📦 DETAIL PESANAN\n` +
+  `━━━━━━━━━━━━━━━━━━\n` +
+  `Produk        : ${paketDipilih}\n` +
+  `${identitas}\n` +
+  `Harga Produk  : Rp ${hargaAsli.toLocaleString("id-ID")}\n` +
+  `Kode Unik     : Rp ${kodeUnik}\n` +
+  `──────────────────\n` +
+  `Total Bayar   : Rp ${total.toLocaleString("id-ID")}\n` +
+  `━━━━━━━━━━━━━━━━━━\n\n` +
+  `Bukti pembayaran akan saya kirimkan.\n` +
+  `Terima kasih 🙏`;
+   
   window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(text)}`);
 }
 
