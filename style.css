@@ -1,0 +1,434 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ================= BODY (SCROLL UTAMA) ================= */
+body {
+  background: #0e0e0e;
+  color: #ffffff;
+  padding-bottom: 100px; /* ruang aman footer fixed */
+}
+
+/* BATASI LEBAR DI DESKTOP AGAR TIDAK TERLALU MELEBAR */
+.container,
+.header,
+.marquee,
+.feature-bar {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================= HEADER ================= */
+.header {
+  background: #000;
+  text-align: center;
+  padding: 16px;
+  border-bottom: 1px solid #222;
+  position: relative; /* ikut scroll */
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* ================= MARQUEE ================= */
+.marquee {
+  background: #111;
+  color: #ccc;
+  font-size: 12px;
+  margin-top: 8px;
+  padding: 6px 0;
+  overflow: hidden;
+}
+
+.marquee-text {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: marquee 18s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  padding: 16px;
+}
+
+/* ================= INPUT ================= */
+.input-box input {
+  width: 100%;
+  padding: 14px;
+  background: #111;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+}
+.input-box {
+  margin-bottom: 8px; /* antar input */
+}
+
+/* ================= QUICK ACTION LINKS ================= */
+.quick-actions {
+  display: flex;
+  gap: 8px;
+  margin: 6px 0 0;
+}
+
+/* SAMAKAN SEMUA QUICK ACTION */
+.qa-btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px 6px;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  color: #ccc;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  transition: all 0.2s ease;
+}
+
+/* HAPUS efek putih khusus highlight */
+.qa-btn.highlight {
+  color: #ccc;
+  font-weight: 500;
+}
+
+/* AKTIF (kalau nanti dipakai) */
+.qa-btn.active {
+  border: 1.5px solid #fff;
+  background: linear-gradient(135deg, #1a1a1a, #000);
+  color: #fff;
+}
+
+.input-box:last-of-type {
+  margin-bottom: 0; /* jarak ke tab */
+}
+
+/* ================= TABS ================= */
+.tabs {
+  display: flex;
+  margin-top: 0;
+  gap: 6px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  background: #111;
+  border: 1px solid #333;
+  color: #aaa;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.tabs .active {
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+}
+
+/* ================= OPERATOR TABS ================= */
+.operator-tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: 0;   /* jarak dari tab utama */
+  margin-bottom: 16px;   /* BIAR SAMA DENGAN TAB LAIN */
+}
+
+.operator-tabs button {
+  flex: 1;
+  padding: 8px;
+  background: #111;
+  border: 1px solid #333;
+  color: #aaa;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.operator-tabs .op-active {
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+}
+
+/* ================= PRODUK (TANPA INNER SCROLL) ================= */
+.product-wrapper {
+  padding-top: 16px;   /* JARAK DARI TAB */
+  padding-bottom: 24px; /* jarak antar produk */
+}
+
+/* ================= CARD PRODUK ================= */
+.card {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.card h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.price {
+  font-size: 13px;
+  color: #ccc;
+}
+
+/* Deskripsi produk */
+.card h4 + * {
+  display: inline-block;
+  font-size: 11px;
+  color: #b0b0b0;
+  background: #1f1f1f;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: 4px 0 8px;
+}
+
+/* ================= PROMO TAG ================= */
+.promo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  color: #000;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* ================= CARD AKTIF ================= */
+.card.active {
+  border: 2px solid #ffffff;
+  background: linear-gradient(135deg, #1a1a1a, #000);
+}
+
+.card.active h4,
+.card.active .price,
+.card.active .desc {
+  color: #ffffff;
+}
+
+.card.active::after {
+  content: "✓ Dipilih";
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ffffff;
+  color: #000;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* ================= FOOTER TOTAL BAYAR (FIXED) ================= */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  border-top: 1px solid #222;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(6px);
+}
+
+.footer small {
+  color: #aaa;
+}
+
+.footer #total {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.footer button {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* ================= MODAL ================= */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 200;
+}
+
+.modal-content {
+  background: #111;
+  margin: 80px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 340px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.modal-content h3 {
+  margin-bottom: 8px;
+}
+
+.modal-content p {
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.wa-btn {
+  width: 100%;
+  background: #25D366;
+  color: #000;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.close-btn {
+  width: 100%;
+  background: #222;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+/* ================= FLOATING WHATSAPP ================= */
+.wa-float {
+  position: fixed;
+  bottom: 100px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  cursor: pointer;
+  z-index: 999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+
+.wa-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ================= FEATURE BAR ================= */
+.feature-bar {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+
+  margin: 12px auto 0;
+  border: 1px solid #222;
+  background: #000;
+  width: 100%;
+}
+
+/* ================= ITEM ================= */
+.feature-item {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #ccc;
+  text-align: center;
+
+  background: #000;
+  border-right: 1px solid #222;
+
+  /* PENTING: HP aman */
+  white-space: normal;
+}
+
+/* HAPUS BORDER KANAN ITEM TERAKHIR */
+.feature-item:last-child {
+  border-right: none;
+}
+
+/* ================= ICON GIF ================= */
+.feature-item img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ================= DESKTOP (PAKSA 1 BARIS) ================= */
+@media (min-width: 769px) {
+  .feature-item {
+    white-space: nowrap;
+  }
+}
+
+/* ================= TABLET & HP BESAR ================= */
+@media (max-width: 768px) {
+  .feature-item {
+    font-size: 11.5px;
+    padding: 9px 10px;
+  }
+
+  .feature-item img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ================= HP KECIL ================= */
+@media (max-width: 480px) {
+  .feature-item {
+    font-size: 11px;
+    padding: 8px 8px;
+  }
+
+  .feature-item img {
+    width: 16px;
+    height: 16px;
+  }
+}
