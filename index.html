@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>XC-Store | PPOB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+  <!-- FLOATING CHAT ADMIN -->
+<div class="wa-float" onclick="chatAdmin()">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</div>
+<!-- POPUP PERINGATAN -->
+<div class="modal" id="alertModal">
+  <div class="modal-content">
+    <h3>⚠️ Perhatian Sebelum Transaksi</h3>
+
+    <p style="font-size:13px;line-height:1.5;">
+      • Transaksi diproses <b>setelah pembayaran selesai.</b><br>
+      • Pastikan total nominal pembayaran benar (tidak boleh lebih/kurang).<br>
+      • Pastikan NOMOR/ID & SERVER MLBB sudah benar.<br>
+      • Salah input bukan tanggung jawab admin.<br>
+      • Baca deskripsi produk sebelum membeli, membeli=paham.<br>
+      • Produk stok terbatas wajib tanya stok ke admin.<br>
+      • Apabila pembeli melakukan Hapus/Keluar dari paket anggota CIRCLE/AKRAB, GARANSI HANGUS (tidak bisa diinvite/dimasukkan ulang).
+    </p>
+
+    <button onclick="closeAlert()">Saya Mengerti</button>
+  </div>
+</div>
+<body>
+
+<header class="header">
+  <h1>XC-Store</h1>
+
+  <div class="marquee">
+    <div class="marquee-text">
+      🎉 Promo Terbaru XC-Store • Pembayaran QRIS Bebas Admin • Gagal = Dana Dikembalikan Utuh • Tidak Menerima Pembayaran Cash • Trik kebagian produk stok terbatas adalah ikutan Pre-order •
+    </div>
+  </div>
+  <div class="feature-bar">
+    <div class="feature-item">
+      <img src="assets/icons/lightning.gif" alt="Cepat & Hemat">
+      <span>Cepat & Hemat</span>
+    </div>
+
+    <div class="feature-item">
+      <img src="assets/icons/contact-support.gif" alt="Layanan 07-21 WIB">
+      <span>CS 07–21 WIB</span>
+    </div>
+
+    <div class="feature-item">
+      <img src="assets/icons/secure.gif" alt="Aman & Terpercaya">
+      <span>Aman & Terpercaya</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="input-box" id="inputHP">
+  <input type="tel" id="nohp" placeholder="Masukkan Nomor HP">
+</div>
+
+<!-- QUICK ACTION LINKS -->
+<div class="quick-actions" id="quickActions">
+  <a href="https://cek-kuota-xl-axis.vercel.app/" target="_blank" class="qa-btn">
+    🔍 Cek Kuota
+  </a>
+  <a href="https://circle-cheker-xcs.vercel.app/" target="_blank" class="qa-btn">
+    📋 Circle Checker
+  </a>
+  <a href="https://po-akrab.vercel.app/" target="_blank" class="qa-btn highlight">
+    ⏳ Pre-Order
+  </a>
+</div>
+
+<div class="input-box" id="inputMLBB" style="display:none;">
+  <input type="text" id="mlbbId" placeholder="Masukkan ID MLBB">
+  <input
+    type="text"
+    id="mlbbServer"
+    placeholder="Masukkan Server (contoh: 1234)"
+    style="margin-top:8px;"
+  >
+</div>
+  </div>
+
+  <!-- TAB -->
+  <div class="tabs">
+  <button id="tabData" class="active" onclick="showTab('data')">Paket Data</button>
+  <button id="tabPulsa" onclick="showTab('pulsa')">Pulsa</button>
+  <button id="tabMasaAktif" onclick="showTab('masaaktif')">Masa Aktif</button>
+  <button id="tabMLBB" onclick="showTab('mlbb')">Diamond MLBB</button>
+</div>
+
+  <!-- ================= PAKET DATA ================= -->
+  <div class="product-wrapper">
+  <div id="data" class="tab-content">
+
+    <div class="operator-tabs">
+      <button class="op-active" onclick="showOperator('xl')">XL</button>
+      <button onclick="showOperator('axis')">AXIS</button>
+      <button onclick="showOperator('indosat')">INDOSAT</button>
+      <button onclick="showOperator('akrab')">AKRAB</button>
+      <button onclick="showOperator('circle')">CIRCLE</button>
+      <button onclick="showOperator('tembak')">TEMBAK</button>
+    </div>
+
+    <!-- XL -->
+    <div id="xl" class="operator-content">
+      <div class="card" onclick="selectPaket(7000,'XL Kuota Game 1GB')">
+        <h4>XL Kuota Game 1GB</h4>
+        <p class="desc">Cocok untuk gandengan WIFI agar tidak lag saat bermain game, berlaku untuk game ML, FF, PUBG, AOV, masa aktif 30 hari</p>
+        <p class="price">Rp 7.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(10000,'XL Kuota Game 2GB')">
+        <h4>XL Kuota Game 2GB</h4>
+        <p class="desc">Cocok untuk gandengan WIFI agar tidak lag saat bermain game, berlaku untuk game ML, FF, PUBG, AOV, masa aktif 30 hari</p>
+        <p class="price">Rp 10.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(30000,'XL Data Flex S 5-8GB')">
+        <h4>XL Data Flex S (5-8GB) 28 Hari</h4>
+        <p class="desc">Kuota utama 5-8GB, berbeda-beda setiap area, untuk area Madura mendapatkan <b>total kuota ± 6GB semua jaringan</b></p>
+        <p class="price">Rp 30.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(35000,'XL Data Flex S+')">
+        <h4>XL Combo Flex S+ 28 Hari</h4>
+        <p class="desc">Kuota utama 3GB + Kuota Area 2-7GB + Bonus Flex,  berbeda-beda setiap area, untuk area Madura mendapatkan <b>total kuota ± 7GB semua jaringan</b></p>
+        <p class="price">Rp 35.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(48000,'XL Data Flex M')">
+        <h4>XL Combo Flex M 28 Hari</h4>
+        <p class="desc">Kuota utama 5GB + Kuota Area 2-10GB + Bonus Flex,  berbeda-beda setiap area, untuk area Madura mendapatkan <b>total kuota ± 10GB semua jaringan</b></p>
+        <p class="price">Rp 48.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(58000,'XL Data Flex M+')">
+        <h4>XL Combo Flex M+ 28 Hari</h4>
+        <p class="desc">Kuota utama 6GB + Kuota Area 3-13GB + Bonus Flex,  berbeda-beda setiap area, untuk area Madura mendapatkan <b>total kuota ± 14GB semua jaringan</b></p>
+        <p class="price">Rp 58.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(66000,'XL Data Flex L')">
+        <h4>XL Combo Flex L 28 Hari</h4>
+        <p class="desc">Kuota utama 9GB + Kuota Area 4-18GB + Bonus Flex,  berbeda-beda setiap area, untuk area Madura mendapatkan <b>total kuota ± 18GB semua jaringan</b></p>
+        <p class="price">Rp 66.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(76000,'XL Data Flex L+')">
+        <h4>XL Combo Flex L+ 28 Hari</h4>
+        <p class="desc">Kuota utama 11GB + Kuota Area 4-20GB + Bonus Flex,  berbeda-beda setiap area, untuk area Madura mendapatkan <b>total kuota ± 23GB semua jaringan</b></p>
+        <p class="price">Rp 76.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(90000,'XL Flex Max 50GB')">
+        <h4>XL Flex Max 50GB 28 Hari</h4>
+        <p class="desc">Kuota utama 50GB, Cocok untuk yang butuh kuota besar tanpa khawatir kehabisan kuota</p>
+        <p class="price">Rp 90.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(100000,'XL Flex Max 65GB')">
+        <h4>XL Flex Max 65GB 28 Hari</h4>
+        <p class="desc">Kuota utama 65GB, Cocok untuk yang butuh kuota besar tanpa khawatir kehabisan kuota</p>
+        <p class="price">Rp 100.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(125000,'XL Flex Max 80GB')">
+        <h4>XL Flex Max 80GB 28 Hari</h4>
+        <p class="desc">Kuota utama 80GB, Cocok untuk yang butuh kuota besar tanpa khawatir kehabisan kuota</p>
+        <p class="price">Rp 125.000</p>
+        </div>
+        
+        <div class="card" onclick="selectPaket(150000,'XL Flex Max 150GB')">
+        <h4>XL Flex Max 150GB 28 Hari</h4>
+        <p class="desc">Kuota utama 150GB, Cocok untuk yang butuh kuota besar tanpa khawatir kehabisan kuota</p>
+        <p class="price">Rp 150.000</p>
+        </div>
+    </div>
+
+    <!-- AXIS -->
+     <div id="axis" class="operator-content" style="display:none;">
+      <div class="card" onclick="selectPaket(7000,'AXIS Kuota Game 1GB')">
+        <h4>AXIS Kuota Game 1GB</h4>
+        <p class="desc">Cocok untuk gandengan WIFI agar tidak lag saat bermain game, berlaku untuk game ML, FF, PUBG, AOV, masa aktif 30 hari</p>
+        <p class="price">Rp 7.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(10000,'AXIS Kuota Game 2GB')">
+        <h4>AXIS Kuota Game 2GB</h4>
+        <p class="desc">Cocok untuk gandengan WIFI agar tidak lag saat bermain game, berlaku untuk game ML, FF, PUBG, AOV, masa aktif 30 hari</p>
+        <p class="price">Rp 10.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(35000,'AXIS Data 10GB')">
+        <span class="promo">Diskon Khusus</span>
+        <h4>AXIS Data 10GB 28 Hari (Khusus Area Tertentu)</h4>
+        <p class="desc">Kuota ini khusus area <b>Madura, Sidoarjo, Malang, dan Sumbawa</b><br>
+        ⚠️ Selain daerah tersebut tidak bisa membeli produk ini</p>
+        <p class="price">Rp 35.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(50000,'AXIS Data 16GB')">
+        <span class="promo">Diskon Khusus</span>
+        <h4>AXIS Data 16GB 28 Hari (Khusus Area Tertentu)</h4>
+        <p class="desc">Kuota ini khusus area <b>Madura, Sidoarjo, Malang, dan Sumbawa</b><br>
+        ⚠️ Selain daerah tersebut tidak bisa membeli produk ini</p>
+        <p class="price">Rp 50.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(17000,'AXIS Bronet 2GB')">
+        <h4>AXIS Bronet 2GB + Bonus Aigo 28 Hari</h4>
+        <p class="desc">Kuota Nasional 2GB, dan mendapatkan bonus paket tambahan sampai dengan 2GB </p>
+        <p class="price">Rp 17.000</p>
+      </div>
+    </div>
+
+    <!-- INDOSAT -->
+    <div id="indosat" class="operator-content" style="display:none;">
+      <div class="card" onclick="selectPaket(24000,'Promo Indosat Data 3GB')">
+        <span class="promo">Promo</span>
+        <h4>Promo Indosat Data 3GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 24.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(26000,'Promo Indosat Data 4GB')">
+        <span class="promo">Promo</span>
+        <h4>Promo Indosat Data 4GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 26.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(32000,'Promo Indosat Data 6GB')">
+        <span class="promo">Promo</span>
+        <h4>Promo Indosat Data 6GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 32.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(33000,'Promo Indosat Data 6.5GB')">
+        <span class="promo">Promo</span>
+        <h4>Promo Indosat Data 6.5GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 33.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(34000,'Promo Indosat Data 9GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 9GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 34.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(37000,'Promo Indosat Data 10GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 10GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 37.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(43000,'Promo Indosat Data 12GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 12GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 43.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(48000,'Promo Indosat Data 13GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 13GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 48.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(55000,'Promo Indosat Data 14GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 14GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 55.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(59000,'Promo Indosat Data 18GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 18GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 59.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(61000,'Promo Indosat Data 20GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 20GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 61.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(64000,'Promo Indosat Data 30GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 30GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 64.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(89000,'Promo Indosat Data 42GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 42GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 89.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(90000,'Promo Indosat Data 45GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Indosat Data 45GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 90.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(92000,'Promo Freedom Sensasi 50GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Freedom Sensasi 50GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 92.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(96000,'Promo Freedom Sensasi 70GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Freedom Sensasi 70GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 96.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(99000,'Promo Freedom Sensasi 100GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Freedom Sensasi 100GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 99.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(102000,'Promo Freedom Sensasi 150GB')">
+        <span class="promo">🔥 Diskon 29%</span>
+        <h4>Promo Freedom Sensasi 150GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 102.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(175000,'Promo Freedom Sensasi 200GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Freedom Sensasi 200GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 175.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(190000,'Promo Freedom Sensasi 250GB')">
+        <span class="promo">Promo 🔥</span>
+        <h4>Promo Freedom Sensasi 250GB 28 Hari</h4>
+        <p class="desc">Kuota utama full reguler tanpa pembagian, Tidak menambah masa aktif kartu, Produk Indosat Promo berpotensi kuota masuknya delay</p>
+        <p class="price">Rp 190.000</p>
+      </div>
+    </div>
+
+    <!-- AKRAB -->
+     <div id="akrab" class="operator-content" style="display:none;">
+       <div class="card" onclick="selectPaket(47000,'Akrab V1 13-30GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 13-30GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±15GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 47.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(51000,'Akrab V1 19-36GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 19-36GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±21GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 51.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(56000,'Akrab V1 25-42GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 25-42GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±27GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 56.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(61000,'Akrab V1 31-48GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 31-48GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±33GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 61.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(66000,'Akrab V1 38-55GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 38-55GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±40GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 66.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(71000,'Akrab V1 47-64GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 47-64GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±47GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 71.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(74000,'Akrab V1 50-67GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 50-67GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±52GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 74.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(76000,'Akrab V1 54-71GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 54-71GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±54GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 76.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(85000,'Akrab V1 63-80GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 63-80GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±65GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 85.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(93000,'Akrab V1 76-93GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 76-93GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±78GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 93.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(102000,'Akrab V1 88-105GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 88-105GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±90GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 102.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(125000,'Akrab V1 110-163GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V1 110-163GB 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±110GB (jika hoki bisa lebih)</b> Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 125.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(46000,'Akrab V2 13GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 13GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±15GB (jika hoki bisa lebih)</b> Paket Bonus Akrab (tidak mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 46.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(49000,'Akrab V2 19GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 19GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±21GB (jika hoki bisa lebih)</b> Paket Bonus Akrab (tidak mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 49.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(55000,'Akrab V2 25GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 25GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±27GB (jika hoki bisa lebih)</b> Paket Bonus Akrab (tidak mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 55.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(60000,'Akrab V2 31GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 31GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±32GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 60.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(64000,'Akrab V2 38 Reguler + Kuota Area 28 HariGB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 38GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±40GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 64.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(69000,'Akrab V2 47GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 47GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±49GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 69.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(74000,'Akrab V2 50GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 50GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±52GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 74.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(82000,'Akrab V2 63GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 63GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±65GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 82.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(91000,'Akrab V2 64 Reguler + Kuota Area 28 HariGB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 64GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±66GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 91.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(92000,'Akrab V2 76GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 76GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±78GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 92.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(101000,'Akrab V2 88GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 88GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±90GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 101.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(124000,'Akrab V2 105GB Reguler + Kuota Area 28 Hari')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>Akrab V2 105GB Reguler + Kuota Area 28 Hari (XL/AXIS)</h4>
+        <p class="desc">Kuota yang didapat sesuai area, <b>area Madura mendapatkan total kuota ±107GB (jika hoki bisa lebih)</b> Paket Akrab Keanggotaan (mendapatkan kuota bersama), Pastikan nomor tidak tertaut aktif dengan paket AKRAB sebelumnya.<br>
+        ⚠️ Stok terbatas, <b>tanyakan stok sebelum membeli.</b></p>
+        <p class="price">Rp 124.000</p>
+      </div>
+</div>
+
+    <!-- CIRCLE -->
+     <div id="circle" class="operator-content" style="display:none;">
+      <div class="card" onclick="selectPaket(20000,'XL Circle OK 5GB')">
+        <span class="promo">Promo</span>
+        <h4>XL Circle OK 5GB Reguler 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 20.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(21000,'XL Circle 5-9GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 5-9GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 21.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(26000,'XL Circle 10-14GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 10-14GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 26.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(31000,'XL Circle 15-19GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 15-19GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 31.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(36000,'XL Circle 20-24GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 20-24GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 36.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(41000,'XL Circle 25-29GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 25-29GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 41.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(46000,'XL Circle 30-34GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 30-34GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 46.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(51000,'XL Circle 35-39GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 35-39GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 51.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(56000,'XL Circle 40-44GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 40-44GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 56.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(61000,'XL Circle 45-49GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 45-49GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 61.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(66000,'XL Circle 50-54GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 50-54GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 66.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(71000,'XL Circle 55-59GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 55-59GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 71.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(76000,'XL Circle 60-64GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 60-64GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 76.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(81000,'XL Circle 65-69GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 65-69GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 81.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(86000,'XL Circle 70-74GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 70-74GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 86.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(91000,'XL Circle 75-79GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 75-79GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 91.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(96000,'XL Circle 80-84GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 80-84GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 96.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(101000,'XL Circle 85-89GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 85-89GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 101.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(106000,'XL Circle 90-94GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 90-94GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 106.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(111000,'XL Circle 95-99GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 95-99GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 111.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(116000,'XL Circle 100-104GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 100-104GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 116.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(121000,'XL Circle 105-109GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 105-109GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 121.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(126000,'XL Circle 110-114GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 110-114GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 126.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(131000,'XL Circle 115-119GB')">
+        <span class="promo">Stok Terbatas</span>
+        <h4>XL Circle 115-119GB 28 Hari</h4>
+        <p class="desc">Tidak menambah masa aktif kartu, <b>Cek dulu kartu kamu apakah bisa beli produk ini melalui tombol Circle Checker diatas.</b></p>
+        <p class="price">Rp 131.000</p>
+      </div>
+    </div>
+    
+    <!-- TEMBAK -->
+     <div id="tembak" class="operator-content" style="display:none;">
+      <div class="card" onclick="selectPaket(35000,'XL Xtra Combo Plus 0-5GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>XL Xtra Combo Plus 0-5GB</h4>
+        <p class="desc">Beli produk ini jika kamu belum punya paket Xtra Combo Plus <b>(syarat wajib agar bisa membeli paket add-on)</b>, masa aktif 28 hari</p>
+        <p class="price">Rp 35.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(6500,'Add-on Xtra Combo Plus - Games 10GB')">
+        <span class="promo">️Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Games 10GB</h4>
+        <p class="desc">Kuota khusus akses game Mobile Legend, Free Fire, PUBG. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 6.500</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(6500,'Add-on Xtra Combo Plus - Sosmed 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Sosmed 10GB</h4>
+        <p class="desc">Kuota khusus akses Spotify, Instagram, Tiktok. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 6.500</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(6500,'Add-on Xtra Combo Plus - Streaming 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Streaming 10GB</h4>
+        <p class="desc">Kuota khusus akses Iflix, VIU, YouTube. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 6.500</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(5000,'Add-on Xtra Combo Plus - WhatsApp 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - WhatsApp 10GB</h4>
+        <p class="desc">Kuota khusus akses WhatsApp 10GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 5.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(5000,'Add-on Xtra Combo Plus - Instagram 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Instagram 10GB</h4>
+        <p class="desc">Kuota khusus akses Instagram 10GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 5.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(5000,'Add-on Xtra Combo Plus - Facebook 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Facebook 10GB</h4>
+        <p class="desc">Kuota khusus akses Facebook 10GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 5.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(5000,'Add-on Xtra Combo Plus - YouTube 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - YouTube 10GB</h4>
+        <p class="desc">Kuota khusus akses YouTube 10GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 5.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(5000,'Add-on Xtra Combo Plus - TikTok 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - TikTok 10GB</h4>
+        <p class="desc">Kuota khusus akses TikTok 10GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 5.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(40000,'Beli Semua Add-on Xtra Combo Plus 10GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Beli Semua Add-on Xtra Combo Plus 10GB</h4>
+        <p class="desc">Total kuota yang didapatkan ±80GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 40.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(9500,'Add-on Xtra Combo Plus - Games 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Games 15GB</h4>
+        <p class="desc">Kuota khusus akses game Mobile Legend, Free Fire, PUBG, (masing-masing 5GB). Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 9.500</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(9500,'Add-on Xtra Combo Plus - Sosmed 15B')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Sosmed 15GB</h4>
+        <p class="desc">Kuota khusus akses Spotify, Instagram, Tiktok, (masing-masing 5GB). Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 9.500</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(9500,'Add-on Xtra Combo Plus - Streaming 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Streaming 15GB</h4>
+        <p class="desc">Kuota khusus akses Iflix, VIU, YouTube, (masing-masing 5GB). Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 9.500</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(7000,'Add-on Xtra Combo Plus - WhatsApp 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - WhatsApp 15GB</h4>
+        <p class="desc">Kuota khusus akses WhatsApp 15GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 7.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(7000,'Add-on Xtra Combo Plus - Instagram 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Instagram 15GB</h4>
+        <p class="desc">Kuota khusus akses Instagram 15GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 7.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(7000,'Add-on Xtra Combo Plus - Facebook 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - Facebook 15GB</h4>
+        <p class="desc">Kuota khusus akses Facebook 15GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 7.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(7000,'Add-on Xtra Combo Plus - YouTube 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - YouTube 15GB</h4>
+        <p class="desc">Kuota khusus akses YouTube 15GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 5.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(7000,'Add-on Xtra Combo Plus - TikTok 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Add-on Xtra Combo Plus - TikTok 15GB</h4>
+        <p class="desc">Kuota khusus akses TikTok 15GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 5.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(60000,'Beli Semua Add-on Xtra Combo Plus 15GB')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Beli Semua Add-on Xtra Combo Plus 15GB</h4>
+        <p class="desc">Total kuota yang didapatkan ±120GB. Masa aktif mengikuti paket utama (Xtra Combo Plus).</p>
+        <p class="price">Rp 60.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(5000,'Tembak Masa Aktif XL 30 Hari')">
+      <span class="promo">Perlu OTP 📌</span>
+      <h4>Tembak Masa Aktif XL 30 Hari</h4>
+      <p class="desc">Memperpanjang masa aktif kartu XL yang kurang 30 hari, menjadi 30 hari. Tidak akumulasi.</p>
+      <p class="price">Rp 5.000</p>
+    </div>
+      
+      <div class="card" onclick="selectPaket(0,'Cek Promo XL/AXIS Cuanku')">
+        <span class="promo">Diskon Khusus 🔥</span>
+        <h4>Cek Promo Paket XL/AXIS Cuanku Spesial</h4>
+        <p class="desc">Gunakan fitur ini untuk mengecek promo spesial khusus Nomor XL/AXIS (GRATIS), <b>Tidak semua nomor mendapatkan promo khusus ini</b>, Kamu bisa memilih paket sesuai dengan hasil pengecekan</p>
+        <p class="price">Rp 0</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(7000,'Jasa Registrasi Kartu Perdana XL')">
+        <span class="promo">Perlu OTP 📌</span>
+        <h4>Jasa Registrasi Kartu Perdana XL</h4>
+        <p class="desc">Khusus kartu perdana XL (bukan aktivasi ulang), Tidak menggunakan kuota syarat aktivasi, Tidak menerima nomor yang gagal registrasi sebelumnya</p>
+        <p class="price">Rp 7.000</p>
+      </div>
+      
+      <div class="card" onclick="selectPaket(25000,'Paket Aktivasi Kartu Perdana 3GB')">
+        <h4>Paket Aktivasi Kartu Perdana 3GB (Semua Operator)</h4>
+        <p class="desc">Gunakan produk ini sebelum registrasi kartu perdana kamu (bisa semua operator), jika tidak maka kartu perdana tidak akan bisa diregistrasi, atu gunakan produk Jasa Registrasi diatas (Khusus XL), masa aktif paket 30 hari</p>
+        <p class="price">Rp 25.000</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= PULSA ================= -->
+  <div id="pulsa" class="tab-content" style="display:none;">
+    <div class="card" onclick="selectPaket(6500,'Pulsa 5.000')">
+      <h4>Pulsa 5.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 6.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(11500,'Pulsa 10.000')">
+      <h4>Pulsa 10.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 11.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(16500,'Pulsa 15.000')">
+      <h4>Pulsa 15.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 16.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(21500,'Pulsa 20.000')">
+      <h4>Pulsa 20.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 21.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(26500,'Pulsa 25.000')">
+      <h4>Pulsa 25.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 26.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(31500,'Pulsa 30.000')">
+      <h4>Pulsa 30.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 31.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(41500,'Pulsa 40.000')">
+      <h4>Pulsa 40.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 41.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(51500,'Pulsa 50.000')">
+      <h4>Pulsa 50.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 51.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(61500,'Pulsa 60.000')">
+      <h4>Pulsa 60.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 61.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(71500,'Pulsa 70.000')">
+      <h4>Pulsa 70.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 71.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(81500,'Pulsa 80.000')">
+      <h4>Pulsa 80.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 81.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(91500,'Pulsa 90.000')">
+      <h4>Pulsa 90.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 91.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(101500,'Pulsa 100.000')">
+      <h4>Pulsa 100.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 101.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(151500,'Pulsa 150.000')">
+      <h4>Pulsa 150.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 151.500</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(201500,'Pulsa 200.000')">
+      <h4>Pulsa 200.000</h4>
+      <p class="desc">Pulsa semua operator (XL, AXIS, INDOSAT, TELKOMSEL, SMARTFREN, TRI, BY.U)</p>
+      <p class="price">Rp 201.500</p>
+    </div>
+  </div>
+
+  <!-- ================= MASA AKTIF ================= -->
+  <div id="masaaktif" class="tab-content" style="display:none;">
+    <div class="card" onclick="selectPaket(7000,'Masa Aktif XL 30 Hari')">
+      <h4>Masa Aktif XL 30 Hari</h4>
+      <p class="desc">Memperpanjang masa aktif kartu XL yang kurang 30 hari, menjadi 30 hari. Tidak akumulasi.</p>
+      <p class="price">Rp 7.000</p>
+    </div>
+
+    <div class="card" onclick="selectPaket(7000,'Masa Aktif AXIS 30 Hari')">
+      <h4>Masa Aktif AXIS 30 Hari</h4>
+      <p class="desc">Memperpanjang masa aktif kartu AXIS yang kurang 30 hari, menjadi 30 hari. Tidak akumulasi.</p>
+      <p class="price">Rp 7.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(10000,'Masa Aktif Indosat 15 Hari')">
+      <h4>Masa Aktif Indosat 15 Hari</h4>
+      <p class="desc">Khusus kartu Indosat dengan masa aktif minimal 15 hari. Tidak akumulasi.</p>
+      <p class="price">Rp 10.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(12000,'Masa Aktif Indosat 30 Hari')">
+      <h4>Masa Aktif Indosat 30 Hari</h4>
+      <p class="desc">Khusus kartu Indosat yang belum memasuki Masa Tenggang. Masa aktif 30 hari Tidak akumulasi.</p>
+      <p class="price">Rp 12.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(6000,'Masa Aktif Telkomsel 10 Hari')">
+      <h4>Masa Aktif Telkomsel 10 Hari</h4>
+      <p class="desc">Menambah masa aktif kartu Telkomsel 10 hari (bisa akumulasi) maksimal akumulasi Telkomsel 365 hari (1 Tahun)</p>
+      <p class="price">Rp 6.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(8000,'Masa Aktif Telkomsel 15 Hari')">
+      <h4>Masa Aktif Telkomsel 15 Hari</h4>
+      <p class="desc">Menambah masa aktif kartu Telkomsel 15 hari (bisa akumulasi) maksimal akumulasi Telkomsel 365 hari (1 Tahun)</p>
+      <p class="price">Rp 8.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(16000,'Masa Aktif Telkomsel 30 Hari')">
+      <h4>Masa Aktif Telkomsel 30 Hari</h4>
+      <p class="desc">Menambah masa aktif kartu Telkomsel 30 hari (bisa akumulasi) maksimal akumulasi Telkomsel 365 hari (1 Tahun)</p>
+      <p class="price">Rp 16.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(35000,'Masa Aktif Telkomsel 90 Hari')">
+      <h4>Masa Aktif Telkomsel 90 Hari</h4>
+      <p class="desc">Menambah masa aktif kartu Telkomsel 90 hari (bisa akumulasi) maksimal akumulasi Telkomsel 365 hari (1 Tahun)</p>
+      <p class="price">Rp 35.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(60000,'Masa Aktif Telkomsel 180 Hari')">
+      <h4>Masa Aktif Telkomsel 180 Hari</h4>
+      <p class="desc">Menambah masa aktif kartu Telkomsel 180 hari (bisa akumulasi) maksimal akumulasi Telkomsel 365 hari (1 Tahun)</p>
+      <p class="price">Rp 60.000</p>
+    </div>
+    
+    <div class="card" onclick="selectPaket(115000,'Masa Aktif Telkomsel 360 Hari')">
+      <h4>Masa Aktif Telkomsel 360 Hari</h4>
+      <p class="desc">Menambah masa aktif kartu Telkomsel 360 hari (bisa akumulasi) maksimal akumulasi Telkomsel 365 hari (1 Tahun)</p>
+      <p class="price">Rp 115.000</p>
+    </div>
+  </div>
+<!-- ================= DIAMOND MLBB ================= -->
+<div id="mlbb" class="tab-content" style="display:none;">
+
+  <div class="card" onclick="selectPaket(25000,'MLBB Weekly Diamond Pass - Limited (Stok Terbatas)')">
+    <span class="promo">Limited 🔥</span>
+    <h4>Weekly Diamond Pass - Limited</h4>
+    <p class="desc">
+      WDP PROMO MURAH by XC-Store, info restok di story/saluran WhatsApp resmi XC-Store.<br>
+      ⚠️ Stok terbatas, <b>WAJIB tanya stok terlebih dahulu</b>
+    </p>
+    <p class="price">Rp 25.000</p>
+  </div>
+
+  <div class="card" onclick="selectPaket(29000,'MLBB Weekly Diamond Pass - Turbo')">
+    <h4>Weekly Diamond Pass - Turbo</h4>
+    <p class="desc">
+      Diamond MLBB mingguan, Unlimited Stock.<br>
+      ✅ Stok selalu tersedia
+    </p>
+    <p class="price">Rp 29.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(57000,'MLBB Weekly Diamond Pass - x2')">
+    <h4>Weekly Diamond Pass - x2</h4>
+    <p class="desc">
+      Diamond MLBB mingguan x2 (Double), Unlimited Stock.<br>
+      ✅ Stok selalu tersedia
+    </p>
+    <p class="price">Rp 57.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(85000,'MLBB Weekly Diamond Pass - x3')">
+    <h4>Weekly Diamond Pass - x3</h4>
+    <p class="desc">
+      Diamond MLBB mingguan x3 (Triple), Unlimited Stock.<br>
+      ✅ Stok selalu tersedia
+    </p>
+    <p class="price">Rp 85.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(113000,'MLBB Weekly Diamond Pass - x4')">
+    <h4>Weekly Diamond Pass - x4</h4>
+    <p class="desc">
+      Diamond MLBB mingguan x4 (Quadruple), Unlimited Stock.<br>
+      ✅ Stok selalu tersedia
+    </p>
+    <p class="price">Rp 113.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(140000,'MLBB Weekly Diamond Pass - x5')">
+    <h4>Weekly Diamond Pass - x5</h4>
+    <p class="desc">
+      Diamond MLBB mingguan x5 (Quintuple), Unlimited Stock.<br>
+      ✅ Stok selalu tersedia
+    </p>
+    <p class="price">Rp 140.000</p>
+  </div>
+
+<div class="card" onclick="selectPaket(17000,'MLBB 54 Diamond')">
+    <h4>Misi Top Up 54 Diamond MLBB (50+4)</h4>
+    <p class="desc">Gunakan produk ini untuk <b>menyelesaikan misi top up 50 Diamond</b> agar kamu bisa menyelasaikan misi dan mendapat hadiah misi di dalam game MLBB</p>
+    <p class="price">Rp 17.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(34000,'MLBB 110 Diamond')">
+    <h4>Misi Top Up 110 Diamond MLBB (100+10)</h4>
+    <p class="desc">Gunakan produk ini untuk <b>menyelesaikan misi top up 100 Diamond</b> agar kamu bisa menyelasaikan misi dan mendapat hadiah misi di dalam game MLBB</p>
+    <p class="price">Rp 34.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(81000,'MLBB 276 Diamond')">
+    <h4>Misi Top Up 276 Diamond MLBB (251+25)</h4>
+    <p class="desc">Gunakan produk ini untuk <b>menyelesaikan misi top up 250 Diamond</b> agar kamu bisa menyelasaikan misi dan mendapat hadiah misi di dalam game MLBB</p>
+    <p class="price">Rp 81.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(158000,'MLBB 554 Diamond')">
+    <h4>Misi Top Up 554 Diamond MLBB (500+54)</h4>
+    <p class="desc">Gunakan produk ini untuk <b>menyelesaikan misi top up 500 Diamond</b> agar kamu bisa menyelasaikan misi dan mendapat hadiah misi di dalam game MLBB</p>
+    <p class="price">Rp 158.000</p>
+  </div>
+  
+  <div class="card" onclick="selectPaket(311000,'MLBB 1136 Diamond')">
+    <h4>Misi Top Up 1136 Diamond MLBB (1006+130)</h4>
+    <p class="desc">Gunakan produk ini untuk <b>menyelesaikan misi top up 1000 Diamond</b> agar kamu bisa menyelasaikan misi dan mendapat hadiah misi di dalam game MLBB</p>
+    <p class="price">Rp 311.000</p>
+  </div>
+
+  <div class="card" onclick="selectPaket(2000,'MLBB 3 Diamond')">
+    <h4>3 Diamond MLBB</h4>
+    <p class="desc">Top up diamond MLBB cepat & aman</p>
+    <p class="price">Rp 2.000</p>
+  </div>
+
+  <div class="card" onclick="selectPaket(3000,'MLBB 5 Diamond')">
+    <h4>5 Diamond MLBB</h4>
+    <p class="desc">Top up diamond MLBB cepat & aman</p>
+    <p class="price">Rp 3.000</p>
+  </div>
+
+</div>
+</div>
+
+<footer class="footer">
+  <div>
+    <small>Total Pembayaran</small>
+    <div id="total">Rp 0</div>
+  </div>
+
+  <button class="order-btn" onclick="openQR()">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M7 8V7a5 5 0 0 1 10 0v1" />
+      <rect x="4" y="8" width="16" height="13" rx="2.5" />
+    </svg>
+    Bayar Sekarang!
+  </button>
+</footer>
+
+<!-- MODAL QRIS -->
+<div class="modal" id="qrisModal">
+  <div class="modal-content">
+    <h3>Scan QRIS & Bayar</h3>
+
+    <p id="totalBayar"></p>
+
+    <!-- TOMBOL COPY NOMINAL -->
+    <button
+      id="copyNominalBtn"
+      style="width:100%;background:#fff;color:#000;border:none;
+      padding:10px;border-radius:10px;font-weight:600;margin-bottom:8px;"
+      onclick="copyNominal()"
+    >
+      📋 Salin Nominal Pembayaran
+    </button>
+
+    <!-- TOMBOL DOWNLOAD QR -->
+    <button
+      style="width:100%;background:#111;color:#fff;border:1px solid #333;
+      padding:10px;border-radius:10px;font-weight:600;margin-bottom:8px;"
+      onclick="downloadQRIS()"
+    >
+      ⬇️ Download QRIS
+    </button>
+
+    <small style="color:#aaa;display:block;margin-bottom:8px;">
+      *Nominal sudah termasuk <b>kode unik</b> agar pembayaran mudah diverifikasi.
+    </small>
+
+    <!-- GAMBAR QR -->
+    <img id="qrisImage" src="qris-gopay.png" width="200">
+
+    <button class="wa-btn" onclick="chatWhatsApp()">Kirim Pesanan</button>
+    <small style="display:block;margin-top:6px;color:#aaa;">
+  Pesanan diproses setelah tombol ini diklik
+</small>
+    <button class="close-btn" onclick="closeQR()">Tutup</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
